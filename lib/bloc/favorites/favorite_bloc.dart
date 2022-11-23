@@ -1,22 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../repositories/pokemon_repository.dart';
-import 'favorite_event.dart';
-import 'favorite_state.dart';
+import 'bloc.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   final PokemonRepository _pokemonRepository;
 
-  FavoriteBloc(this._pokemonRepository) : super(FavoriteInitial()) {
+  FavoriteBloc(this._pokemonRepository) : super(const FavoriteState()) {
     on<FavoriteEvent>((event, emit) async {
       if (event is GetFavorites) {
-        emit(FavoriteLoadInProgress());
         try {
-          var favorites = await _pokemonRepository.getFavorites();
-          emit(TotalFavorites(totalFavorites: favorites.length));
-          emit(FavoriteLoadSuccess(favoriteListings: favorites));
+          if (state.status == FavoriteStatus.initial) {
+            var favorites = await _pokemonRepository.getFavorites();
+
+            emit(state.copyWith(
+                status: FavoriteStatus.success,
+                pokemons: favorites,
+                totalFavorites: favorites.length));
+          }
         } on Exception {
-          emit(FavoriteLoadFailed(
-              error: 'an error occurred while fetching Favorites.'));
+          emit(state.copyWith(status: FavoriteStatus.failure));
         }
       }
 
@@ -24,11 +26,12 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         try {
           var favorites =
               await _pokemonRepository.addToFavorites(event.pokemon);
-          emit(TotalFavorites(totalFavorites: favorites.length));
-          emit(FavoriteLoadSuccess(favoriteListings: favorites));
+          emit(state.copyWith(
+              status: FavoriteStatus.success,
+              pokemons: favorites,
+              totalFavorites: favorites.length));
         } on Exception {
-          emit(FavoritesError(
-              error: 'an error occurred while adding Favorite to favorites.'));
+          emit(state.copyWith(status: FavoriteStatus.failure));
         }
       }
 
@@ -36,11 +39,12 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         try {
           var favorites =
               await _pokemonRepository.removeFromFavorites(event.pokemon);
-          emit(TotalFavorites(totalFavorites: favorites.length));
-          emit(FavoriteLoadSuccess(favoriteListings: favorites));
+          emit(state.copyWith(
+              status: FavoriteStatus.success,
+              pokemons: favorites,
+              totalFavorites: favorites.length));
         } on Exception {
-          emit(FavoritesError(
-              error: 'an error occurred while adding Favorite to favorites.'));
+          emit(state.copyWith(status: FavoriteStatus.failure));
         }
       }
     });

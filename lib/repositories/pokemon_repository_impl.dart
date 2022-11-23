@@ -7,8 +7,8 @@ class PokemonRepositoryImpl implements PokemonRepository {
   PokemonService service = PokemonService();
 
   @override
-  Future<List<PokemonModel>> getPokemons() {
-    return service.getPokemons();
+  Future<List<PokemonModel>> getPokemons({required bool isFirstTime}) {
+    return service.getPokemons(isFirstTime: isFirstTime);
   }
 
   @override

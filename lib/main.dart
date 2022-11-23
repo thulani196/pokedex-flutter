@@ -12,8 +12,8 @@ void main() {
     home: MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) =>
-                PokemonBloc(PokemonRepositoryImpl())..add(GetPokemons())),
+            create: (context) => PokemonBloc(PokemonRepositoryImpl())
+              ..add(const GetPokemons(isFirstTime: true))),
         BlocProvider(
             create: (context) =>
                 FavoriteBloc(PokemonRepositoryImpl())..add(GetFavorites()))

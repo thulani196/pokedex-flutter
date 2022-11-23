@@ -12,7 +12,7 @@ void main() {
   var pokemon = MockPokemonService();
 
   test('Should return pokemons from network with Success', () async {
-    when(pokemon.getPokemons()).thenAnswer((_) async {
+    when(pokemon.getPokemons(isFirstTime: true)).thenAnswer((_) async {
       var p = List<dynamic>.from(mockObject)
           .map((model) => PokemonModel.fromJson(model))
           .toList();
@@ -20,7 +20,7 @@ void main() {
       return Future.value(p);
     });
 
-    final pokemonList = await pokemon.getPokemons();
+    final pokemonList = await pokemon.getPokemons(isFirstTime: true);
     expect(pokemonList.length, 2);
   });
 

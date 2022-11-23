@@ -16,22 +16,15 @@ class _AllPokemonsScreenState extends State<AllPokemonsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PokemonBloc, PokemonState>(builder: (context, state) {
-      if (state is PokemonLoadInProgress) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      } else if (state is PokemonLoadSuccess) {
-        return PokemonGrid(
-          pokemon: state.pokemonListings,
-        );
-      } else if (state is PokemonLoadFailed) {
-        return Center(
-          child: Text(state.error),
-        );
-      } else {
-        return const Center(
-          child: Text("error..."),
-        );
+      switch (state.status) {
+        case PokemonStatus.failure:
+          return const Center(child: Text('failed to fetch pokimone'));
+        case PokemonStatus.success:
+          return PokemonGrid(
+            pokemon: state.pokemons,
+          );
+        case PokemonStatus.initial:
+          return const Center(child: CircularProgressIndicator());
       }
     });
   }

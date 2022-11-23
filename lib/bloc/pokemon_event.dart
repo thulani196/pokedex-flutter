@@ -7,4 +7,8 @@ abstract class PokemonEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetPokemons extends PokemonEvent {}
+class GetPokemons extends PokemonEvent {
+  final bool isFirstTime;
+
+  const GetPokemons({required this.isFirstTime});
+}

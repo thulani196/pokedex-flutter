@@ -29,7 +29,8 @@ class MockPokemonService extends _i1.Mock implements _i2.PokemonService {
   }
 
   @override
-  _i3.Future<List<_i4.PokemonModel>> getPokemons() => (super.noSuchMethod(
+  _i3.Future<List<_i4.PokemonModel>> getPokemons({required bool isFirstTime}) =>
+      (super.noSuchMethod(
         Invocation.method(
           #getPokemons,
           [],

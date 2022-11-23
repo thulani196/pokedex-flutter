@@ -1,41 +1,34 @@
+import 'package:equatable/equatable.dart';
+
 import '../../models/pokemon_model.dart';
 
-abstract class FavoriteState {}
+enum FavoriteStatus { initial, success, failure }
 
-class FavoriteInitial extends FavoriteState {}
-
-class FavoriteLoadInProgress extends FavoriteState {}
-
-class FavoriteSuccess extends FavoriteState {}
-
-class FavoriteRemovalSuccess extends FavoriteState {}
-
-class TotalFavorites extends FavoriteState {
+class FavoriteState extends Equatable {
+  final List<PokemonModel> pokemons;
+  final FavoriteStatus status;
   final int totalFavorites;
 
-  TotalFavorites({required this.totalFavorites});
-}
+  const FavoriteState(
+      {this.pokemons = const <PokemonModel>[],
+      this.status = FavoriteStatus.initial,
+      this.totalFavorites = 0});
 
-class FavoriteLoadSuccess extends FavoriteState {
-  final List<PokemonModel> favoriteListings;
+  FavoriteState copyWith(
+      {FavoriteStatus? status,
+      List<PokemonModel>? pokemons,
+      int? totalFavorites}) {
+    return FavoriteState(
+        status: status ?? this.status,
+        pokemons: pokemons ?? this.pokemons,
+        totalFavorites: totalFavorites ?? this.totalFavorites);
+  }
 
-  FavoriteLoadSuccess({required this.favoriteListings});
-}
+  @override
+  String toString() {
+    return '''PokemonState { status: $status, pokemons: ${pokemons.length} }''';
+  }
 
-class FavoriteFavoritesLoadSuccess extends FavoriteState {
-  final List<PokemonModel> favoriteListings;
-
-  FavoriteFavoritesLoadSuccess({required this.favoriteListings});
-}
-
-class FavoriteLoadFailed extends FavoriteState {
-  final String error;
-
-  FavoriteLoadFailed({required this.error});
-}
-
-class FavoritesError extends FavoriteState {
-  final String error;
-
-  FavoritesError({required this.error});
+  @override
+  List<Object?> get props => [status, pokemons];
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/widgets/pokemon_card_data.dart';
+import '../bloc/bloc.dart';
 import '../models/pokemon_model.dart';
 import '../screens/details_screen.dart';
 
@@ -27,12 +29,14 @@ class PokemonCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           enableFeedback: true,
           splashColor: Colors.red[50],
-          onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => DetailsScreen(
-                        pokemon: pokemon,
-                      ))),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailsScreen(
+                          pokemon: pokemon,
+                        )));
+          },
           child: Container(
             padding: const EdgeInsets.only(bottom: 7),
             decoration: getContainerDecoration(),

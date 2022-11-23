@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/favorites/favorite_bloc.dart';
 import '../bloc/favorites/favorite_state.dart';
+import '../bloc/favorites/favorite_bloc.dart';
 import '../constants/constants.dart';
 import 'all_pokemons_screen.dart';
 import 'favorite_pokemon_screen.dart';
@@ -36,7 +36,7 @@ class _TabViewScreenState extends State<TabViewScreen>
   Widget build(BuildContext context) {
     return BlocListener<FavoriteBloc, FavoriteState>(
       listener: (context, state) {
-        if (state is TotalFavorites) {
+        if (state.status == FavoriteStatus.success) {
           setState(() {
             _totalFavorites = state.totalFavorites;
           });

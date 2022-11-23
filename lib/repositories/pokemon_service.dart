@@ -6,16 +6,40 @@ import '../models/pokemon_model.dart';
 import '../models/pokemon_response_model.dart';
 
 class PokemonService {
-  Future<List<PokemonModel>> getPokemons() async {
+  Future<List<PokemonModel>> getPokemons({required bool isFirstTime}) async {
+    final Future<SharedPreferences> pref = SharedPreferences.getInstance();
+    var baseUrl = 'https://www.pokeapi.co/api/v2/pokemon';
+
     try {
-      var response = await http
-          .get(Uri.parse('https://www.pokeapi.co/api/v2/pokemon?limit=5'));
+      final SharedPreferences prefs = await pref;
+      if (isFirstTime) {
+        var response = await http.get(Uri.parse(baseUrl));
+        var results = PokemonResponseModel.fromJson(json.decode(response.body));
 
-      var results = PokemonResponseModel.fromJson(json.decode(response.body));
-      var ids = _extractIds(results);
-      var pokemons = await _getPokemonDetails(ids);
+        var ids = _extractIds(results);
+        var pokemons = await _getPokemonDetails(ids);
 
-      return pokemons;
+        if (results.next != null || results.next!.isNotEmpty) {
+          prefs.setString(nextUrl, results.next!);
+        }
+        return pokemons;
+      } else {
+        var url = prefs.getString(nextUrl) ?? '';
+        if (url.isNotEmpty) {
+          var response = await http.get(Uri.parse(url));
+          var results =
+              PokemonResponseModel.fromJson(json.decode(response.body));
+
+          if (results.next != null || results.next!.isNotEmpty) {
+            prefs.setString(nextUrl, results.next!);
+          }
+
+          var ids = _extractIds(results);
+          var pokemons = await _getPokemonDetails(ids);
+          return pokemons;
+        }
+        return [];
+      }
     } catch (e) {
       rethrow;
     }
