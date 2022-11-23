@@ -1,20 +1,22 @@
 # Thulani Pokedex Home assignment
 
 ## Instructions to run the app
-==> FLutter version: stable 3.3.8
+Flutter version: stable 3.3.8
 1. After cloning the repo, make sure you have the latest Flutter version installed (In this case v3.3.8).
 2. After opening project on terminal run: "flutter pub get" to install dependencies.
 3. To run unit tests, run: "flutter test" from the root of the project directory.
 4. Now if you do not have any errors you must be ready to run. Please note that I have tested on IOS version 16.1 (iOS Simulator) and Pixel 3A Emulator (API v33) Android 13.
    
 ## Used libraries with versions:
-http: ^0.13.5
-percent_indicator: ^4.2.2
-flutter_bloc: ^8.0.1
-shared_preferences: ^2.0.15
-equatable: ^2.0.5
-intl: ^0.17.0
-bloc_concurrency: ^0.2.0
+1. http: ^0.13.5
+2. percent_indicator: ^4.2.2
+3. flutter_bloc: ^8.0.1
+4. shared_preferences: ^2.0.15
+5. equatable: ^2.0.5
+6. intl: ^0.17.0
+7. bloc_concurrency: ^0.2.0
+8. build_runner: ^2.2.0
+9. mockito: ^5.2.0
 
 ## References
 1. - https://petercoding.com/flutter/2022/02/27/using-bloc-pattern-in-flutter/
