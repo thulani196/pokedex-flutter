@@ -7,19 +7,16 @@ import 'package:pokedex/screens/splash_screen.dart';
 import 'repositories/pokemon_repository_impl.dart';
 
 void main() {
-  // runApp(const MyApp());
-  runApp(MaterialApp(
-    home: MultiBlocProvider(
-      providers: [
-        BlocProvider(
-            create: (context) => PokemonBloc(PokemonRepositoryImpl())
-              ..add(const GetPokemons(isFirstTime: true))),
-        BlocProvider(
-            create: (context) =>
-                FavoriteBloc(PokemonRepositoryImpl())..add(GetFavorites()))
-      ],
-      child: const MyApp(),
-    ),
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+          create: (context) => PokemonBloc(PokemonRepositoryImpl())
+            ..add(const GetPokemons(isFirstTime: true))),
+      BlocProvider(
+          create: (context) =>
+              FavoriteBloc(PokemonRepositoryImpl())..add(GetFavorites()))
+    ],
+    child: const MyApp(),
   ));
 }
 

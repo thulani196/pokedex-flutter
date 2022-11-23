@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/widgets/pokemon_card_data.dart';
-import '../bloc/bloc.dart';
 import '../models/pokemon_model.dart';
 import '../screens/details_screen.dart';
 
