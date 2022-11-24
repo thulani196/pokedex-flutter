@@ -7,7 +7,6 @@ import 'package:pokedex/screens/splash_screen.dart';
 import 'repositories/pokemon_repository_impl.dart';
 
 void main() {
-  // runApp(const MyApp());
   runApp(MaterialApp(
     home: MultiBlocProvider(
       providers: [
