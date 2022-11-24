@@ -43,87 +43,94 @@ class _TabViewScreenState extends State<TabViewScreen>
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Image(
-                        fit: BoxFit.scaleDown,
-                        height: 30,
-                        image: AssetImage('assets/images/logo_white_bg.png')),
-                    SizedBox(width: 8),
-                    Text(
-                      'Pokedex',
-                      style: TextStyle(
-                          color: sliverTextColor,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.white,
-                  height: 3,
-                )
-              ],
-            ),
-          ),
-          backgroundColor: Colors.white,
-          bottom: TabBar(
-            controller: _tabController,
-            indicatorColor: blueColor,
-            indicatorWeight: 5,
-            unselectedLabelColor: Colors.green,
-            tabs: [
-              Tab(
-                  child: Center(
-                      child: Text('All Pokemons',
-                          style: TextStyle(
-                            color: _selectedIndex == 0
-                                ? kTextBlackColor
-                                : pokemonGreyText,
-                            fontSize: 16,
-                          )))),
-              Tab(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Favourites',
-                        style: TextStyle(
-                          color: _selectedIndex == 1
-                              ? kTextBlackColor
-                              : pokemonGreyText,
-                          fontSize: 16,
-                        )),
-                    const SizedBox(width: 5),
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: const BoxDecoration(
-                          color: blueColor, shape: BoxShape.circle),
-                      child: Center(
-                          child: Text(_totalFavorites.toString(),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                              ))),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+        appBar: _appBar(context),
         body: TabBarView(
           controller: _tabController,
           children: const [AllPokemonsScreen(), FavoritePokemonsScreen()],
         ),
       ),
+    );
+  }
+
+  AppBar _appBar(BuildContext context) {
+    return AppBar(
+      title: Center(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Image(
+                    fit: BoxFit.scaleDown,
+                    height: 30,
+                    image: AssetImage('assets/images/logo_white_bg.png')),
+                SizedBox(width: 8),
+                Text(
+                  'Pokedex',
+                  style: TextStyle(
+                      color: sliverTextColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              color: Colors.white,
+              height: 3,
+            )
+          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
+      bottom: _tabBar(),
+    );
+  }
+
+  TabBar _tabBar() {
+    return TabBar(
+      controller: _tabController,
+      indicatorColor: blueColor,
+      indicatorWeight: 5,
+      unselectedLabelColor: Colors.green,
+      tabs: [
+        Tab(
+            child: Center(
+                child: Text('All Pokemons',
+                    style: TextStyle(
+                      color: _selectedIndex == 0
+                          ? kTextBlackColor
+                          : pokemonGreyText,
+                      fontSize: 16,
+                    )))),
+        Tab(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Favourites',
+                  style: TextStyle(
+                    color:
+                        _selectedIndex == 1 ? kTextBlackColor : pokemonGreyText,
+                    fontSize: 16,
+                  )),
+              const SizedBox(width: 5),
+              Container(
+                width: 30,
+                height: 30,
+                decoration: const BoxDecoration(
+                    color: blueColor, shape: BoxShape.circle),
+                child: Center(
+                    child: Text(_totalFavorites.toString(),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ))),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

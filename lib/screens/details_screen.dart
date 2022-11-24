@@ -43,32 +43,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: getAccentColor(
-                    widget.pokemon.types![0].type!.name!.capitalize())
-                .withOpacity(0.1),
-            leading: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: const Icon(
-                Icons.arrow_back,
-                color: sliverTextColor,
-              ),
-            ),
-            expandedHeight: 250.0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: _pokemonCard(),
-            ),
-          ),
-          SliverList(
-              delegate: SliverChildListDelegate([
-            _basicDetails(widget.pokemon.height!, widget.pokemon.weight!),
-            const SizedBox(
-              height: 10,
-            ),
-            _stats(widget.pokemon.stats!)
-          ]))
-        ],
+        slivers: [_sliverAppBar(context), _sliverList()],
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: addedToFavourites
@@ -93,6 +68,36 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ? addFavoriteBackgroundColor
                   : Colors.white),
         ),
+      ),
+    );
+  }
+
+  SliverList _sliverList() {
+    return SliverList(
+        delegate: SliverChildListDelegate([
+      _basicDetails(widget.pokemon.height!, widget.pokemon.weight!),
+      const SizedBox(
+        height: 10,
+      ),
+      _stats(widget.pokemon.stats!)
+    ]));
+  }
+
+  SliverAppBar _sliverAppBar(BuildContext context) {
+    return SliverAppBar(
+      backgroundColor:
+          getAccentColor(widget.pokemon.types![0].type!.name!.capitalize())
+              .withOpacity(0.1),
+      leading: GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: const Icon(
+          Icons.arrow_back,
+          color: sliverTextColor,
+        ),
+      ),
+      expandedHeight: 250.0,
+      flexibleSpace: FlexibleSpaceBar(
+        background: _pokemonCard(),
       ),
     );
   }
